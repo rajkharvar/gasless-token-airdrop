@@ -10,7 +10,6 @@ contract TokenDrop is ERC20 {
 
     string constant message =
         "Sign the message to claim the 10 GLTKN token without spending gas fees.";
-    bytes32 public signedMessage;
 
     constructor(address _relayAddress) ERC20("Gasless Token", "GLTKN") {
         _mint(_relayAddress, 1000000 * 10**18);
@@ -18,7 +17,7 @@ contract TokenDrop is ERC20 {
         admin = msg.sender;
         relayerAddress = _relayAddress;
 
-        signedMessage = keccak256(abi.encodePacked(message));
+        // signedMessage = keccak256(abi.encodePacked(message));
     }
 
     function airdrop(address sender, bytes memory signature) public {
@@ -27,7 +26,11 @@ contract TokenDrop is ERC20 {
             "not relayer or admin"
         );
 
-        address signer = signedMessage.recover(signature);
+        bytes32 messageHash = keccak256(bytes(message));
+        address signer = messageHash.toEthSignedMessageHash().recover(
+            signature
+        );
+
         require(signer == sender, "signature mismatch with sender");
 
         _approve(msg.sender, address(this), 10 * 10**18);
