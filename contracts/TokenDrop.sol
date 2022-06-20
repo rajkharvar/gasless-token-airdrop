@@ -16,8 +16,6 @@ contract TokenDrop is ERC20 {
         _mint(msg.sender, 1000000 * 10**18);
         admin = msg.sender;
         relayerAddress = _relayAddress;
-
-        // signedMessage = keccak256(abi.encodePacked(message));
     }
 
     function airdrop(address sender, bytes memory signature) public {
