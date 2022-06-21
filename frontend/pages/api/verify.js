@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     TokenDrop.abi,
     relaySigner
   );
-  await tokenDrop.airdrop(address, signature);
+  const tx = await tokenDrop.airdrop(address, signature);
   console.timeEnd("req");
-  res.status(200).json({ name: "John Doe" });
+  res.status(200).json({ ...tx });
 }
