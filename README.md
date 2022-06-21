@@ -1,6 +1,12 @@
-# Gasless Token drop
+# Gasless Token Airdrop
 
-Gasless token drop using relay.
-More info TBA
+Airdrop tokens to the end user without charging for gas fees.
 
-TokenDrop contract address (Mumbai): 0xfa53Ec5cf68f9dDC9C25df0Cb788c5b1eCd84772
+## Working
+
+1. User signs the message signature request on frontend.
+2. A request is made by frontend to API which sends address logged in metamask and signature.
+3. API server makes request to [Relay](https://docs.openzeppelin.com/defender/relay)
+4. Relay makes call to contract which internally validate the signature and airdrops 10 GSTKN to the address.
+
+TokenDrop contract address (Mumbai): 0x0cc4A47D26c67e720446B5d5F82E1A501471967e
