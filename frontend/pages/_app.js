@@ -1,7 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
@@ -24,14 +20,16 @@ const wagmiClient = createClient({
   connectors,
 });
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+function MyApp({ Component, pageProps }) {
+  return (
     <ChakraProvider>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
-          <App />
+          <Component {...pageProps} />
         </RainbowKitProvider>
       </WagmiConfig>
     </ChakraProvider>
-  </React.StrictMode>
-);
+  );
+}
+
+export default MyApp;
