@@ -6,6 +6,7 @@ import {
   Text,
   useToast,
   Badge,
+  HStack,
 } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useContract, useSigner } from "wagmi";
@@ -71,13 +72,13 @@ export default function Home() {
   };
   return (
     <VStack mt={2}>
-      <Flex alignSelf="flex-end" p={4}>
+      <HStack alignSelf="flex-end" p={4}>
+        <Badge colorScheme="teal" fontSize="lg" mr={4} borderRadius="lg">
+          {balance} GLTKN
+        </Badge>
         <ConnectButton />
-      </Flex>
+      </HStack>
       <Heading>Gasless Token aidrop</Heading>
-      <Badge colorScheme="teal" fontSize="lg">
-        {balance} GLTKN
-      </Badge>
       <Text>
         Sign the message to receive 10 GLTKN without paying for gas fees
       </Text>
