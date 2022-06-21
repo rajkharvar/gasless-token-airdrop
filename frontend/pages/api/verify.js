@@ -11,6 +11,7 @@ const TOKEN_DROP_ADDRESS = process.env.TOKEN_DROP_ADDRESS;
 import TokenDrop from "../../abi/TokenDrop.json";
 
 export default async function handler(req, res) {
+  console.time("req");
   const { signature, address } = req.query;
   const credentials = {
     apiKey: API_KEY,
@@ -27,10 +28,7 @@ export default async function handler(req, res) {
     TokenDrop.abi,
     relaySigner
   );
-  const tx = await tokenDrop.airdrop(address, signature);
-  await tx.wait();
-
-  console.log("tx");
-  console.log(tx);
+  await tokenDrop.airdrop(address, signature);
+  console.timeEnd("req");
   res.status(200).json({ name: "John Doe" });
 }
