@@ -32,12 +32,13 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchTokenBalance = async () => {
-    console.log("fetching balance");
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signerWeb3 = provider.getSigner();
     try {
       const tokenDrop = new ethers.Contract(
         TOKEN_DROP_ADDRESS,
         TokenDrop.abi,
-        signer
+        signerWeb3
       );
       const balance = await tokenDrop.balanceOf(data.address);
       setBalance(ethers.utils.formatEther(balance));
