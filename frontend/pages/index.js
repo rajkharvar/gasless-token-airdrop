@@ -14,6 +14,7 @@ import axios from "axios";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useAccount, useNetwork, useSigner } from "wagmi";
+import useIsMounted from "../hooks/useIsMounted";
 
 import TokenDrop from "../abi/TokenDrop.json";
 
@@ -23,6 +24,7 @@ const MESSAGE =
   "Sign the message to claim the 10 GLTKN token without spending gas fees.";
 
 export default function Home() {
+  const isMounted = useIsMounted();
   const { data } = useAccount();
   const { data: signer } = useSigner();
   const toast = useToast();
@@ -101,24 +103,28 @@ export default function Home() {
   };
   return (
     <VStack mt={2}>
-      <HStack alignSelf="flex-end" p={4}>
-        <Badge colorScheme="teal" fontSize="lg" mr={4} borderRadius="lg">
-          {balance} GLTKN
-        </Badge>
-        <ConnectButton />
-      </HStack>
-      <Heading>Gasless Token aidrop</Heading>
-      <Text>
-        Sign the message to receive 10 GLTKN without paying for gas fees
-      </Text>
-      <Button
-        disabled={!data || isLoading}
-        colorScheme="blue"
-        onClick={() => signMessage()}
-        isLoading={isLoading}
-      >
-        Sign Message
-      </Button>
+      {isMounted && (
+        <>
+          <HStack alignSelf="flex-end" p={4}>
+            <Badge colorScheme="teal" fontSize="lg" mr={4} borderRadius="lg">
+              {balance} GLTKN
+            </Badge>
+            <ConnectButton />
+          </HStack>
+          <Heading>Gasless Token aidrop</Heading>
+          <Text>
+            Sign the message to receive 10 GLTKN without paying for gas fees
+          </Text>
+          <Button
+            disabled={!data || isLoading}
+            colorScheme="blue"
+            onClick={() => signMessage()}
+            isLoading={isLoading}
+          >
+            Sign Message
+          </Button>
+        </>
+      )}
     </VStack>
   );
 }
